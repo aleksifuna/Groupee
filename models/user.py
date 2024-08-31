@@ -7,23 +7,37 @@ import bcrypt
 from uuid import uuid4
 
 
+user_group = db.Table(
+    'user_group',
+    db.Column('user_id', db.String, db.ForeignKey('users.id')),
+    db.Column('group_id', db.String, db.ForeignKey('groups.id'))
+)
+
+
+
 class User(db.Model):
     """
     Defines a User object's attributes and properties
     """
     __tablename__ = 'users'
-    userId = db.Column(db.String(255), primary_key=True, nullable=False)
+    id = db.Column(db.String(255), primary_key=True, nullable=False)
     firstName = db.Column(db.String(20), nullable=False)
     lastName = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     phone = db.Column(db.String(70))
 
+    groups = db.relationship(
+        'Group',
+        secondary=user_group,
+        backref='members'
+    )
+
     def __init__(self):
         """
         Class constructor
         """
-        self.userId = str(uuid4())
+        self.id = str(uuid4())
 
     def set_password(self, password):
         """
