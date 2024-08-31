@@ -34,8 +34,10 @@ def create_app(environment: str):
 
     with app.app_context():
         from .auth_route import auth_bp
+        from .status_route import status_bp
 
         app.register_blueprint(auth_bp)
+        app.register_blueprint(status_bp)
 
         db.create_all()
 
