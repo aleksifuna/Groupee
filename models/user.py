@@ -9,8 +9,8 @@ from uuid import uuid4
 
 user_group = db.Table(
     'user_group',
-    db.Column('user_id', db.String, db.ForeignKey('users.id')),
-    db.Column('group_id', db.String, db.ForeignKey('groups.id'))
+    db.Column('user_id', db.String(128), db.ForeignKey('users.id')),
+    db.Column('group_id', db.String(128), db.ForeignKey('groups.id'))
 )
 
 

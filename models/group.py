@@ -14,7 +14,7 @@ class Group(db.Model):
     __tablename__ = 'groups'
     id = db.Column(db.String(128), primary_key=True, nullable=False)
     description = db.Column(db.String(100), nullable=True)
-    amount = db.Column(db.float, nullable=False)
+    amount = db.Column(db.Float, nullable=False)
     vendor_payment_details = db.Column(db.String(100))
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     
@@ -23,3 +23,8 @@ class Group(db.Model):
         Class constructor
         """
         self.id = str(uuid4())
+    
+    def todict(self):
+        """ return dictionary representation of the obj"""
+        obj_dict = {c.name: str(getattr(self, c.name))
+                    for c in self.__table__.columns}
